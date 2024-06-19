@@ -39,7 +39,7 @@ Route::get('/doctor/login', [DoctorAuthController::class, 'showLoginForm'])->nam
 Route::post('/doctor/login', [DoctorAuthController::class, 'login']);
 Route::post('/doctor/logout', [DoctorAuthController::class, 'logout'])->name('doctor.logout');
 // Route untuk upload file
-Route::post('/upload/file', [App\Http\Controllers\UploadController::class, 'upload'])->name('upload.file');
+Route::post('/predict', [App\Http\Controllers\UploadController::class, 'upload'])->name('upload.file');
 
 // Route untuk appointment dan settings (mungkin membutuhkan controller yang sesuai)
 // Route::get('/appointment', [AppointmentController::class, 'index'])->name('appointment.index');

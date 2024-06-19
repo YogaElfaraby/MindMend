@@ -113,19 +113,19 @@
         <div class="row">
             <div class="col-md-6 anim">
                 <div class="upload-container container-card">
-                    <form action="upload.php" method="post" enctype="multipart/form-data">
-                        <label class="upload-label">Upload Sound</label>
-                        <div class="form-group">
-                            <input type="file" class="form-control-file btn btn-primary mt-4" id="fileToUpload" name="fileToUpload">
-                        </div>
-                        <div class="d-flex justify-content-center">
-                            <button type="submit" class="btn btn-primary mt-4">Upload</button>
-                        </div>
-                    </form>
+                <form action="https://888a-103-194-172-70.ngrok-free.app/predict" method="post" enctype="multipart/form-data">
+                    <label class="upload-label">Upload Sound</label>
+                    <div class="form-group">
+                        <input type="file" class="form-control-file btn btn-primary mt-4" id="fileToUpload" name="fileToUpload">
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" class="btn btn-primary mt-4">Upload</button>
+                    </div>
+                </form>
                 </div>
                 <div class="status-container">
                     <h5>Status Report</h5>
-                    <p>Hasil diagnosis dari suara tersebut adalah anda tidak sigma</p>
+                    <p id="result-text">Hasil diagnosis dari suara tersebut adalah: <span id="predicted-disorder"></span></p>
                 </div>
             </div>
             <div class="col-md-6 anim">
@@ -148,6 +148,27 @@
         document.getElementById("posterContainer").addEventListener("click", function() {
             currentIndex = (currentIndex + 1) % images.length;
             document.getElementById("posterImage").src = images[currentIndex];
+        });
+
+
+    </script>
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', function(event) {
+            event.preventDefault();  // Prevent the form from submitting normally
+
+            var formData = new FormData(this);
+
+            fetch('https://888a-103-194-172-70.ngrok-free.app/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Update UI with prediction result
+                var predictedDisorder = data.predicted_sleep_disorder;
+                document.getElementById('predicted-disorder').textContent = predictedDisorder;
+            })
+            .catch(error => console.error('Error:', error));
         });
 
 
